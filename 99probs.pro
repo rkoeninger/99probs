@@ -42,3 +42,10 @@ pack([[X | Xs], Y | Ys], [[X | Xs] | Zs]) :- X \= Y, !, pack([[Y] | Ys], Zs).
 pack([X | Ys], [X | Zs]) :- is_list(X), !, pack(Ys, Zs).
 pack([X | Xs], Zs) :- !, pack([[X] | Xs], Zs).
 pack([], []).
+
+% P10 (*) Run-length encoding of a list.
+encode([[N, X], X | Ys], Zs) :- !, M is N + 1, encode([[M, X] | Ys], Zs).
+encode([[N, X], Y | Ys], [[N, X] | Zs]) :- X \= Y, !, encode([[1, Y] | Ys], Zs).
+encode([X | Ys], [X | Zs]) :- is_list(X), !, encode(Ys, Zs).
+encode([X | Ys], Zs) :- !, encode([[1, X] | Ys], Zs).
+encode([], []).
