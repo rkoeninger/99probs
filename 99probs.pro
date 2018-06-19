@@ -61,3 +61,10 @@ encode_modified(Xs, Zs) :- encode(Xs, Ys), remove_singles(Ys, Zs).
 decompress_decode_modified([], []) :- !.
 decompress_decode_modified([[_, X] | Xs], [X | Ys]) :- !, decompress_decode_modified(Xs, Ys).
 decompress_decode_modified([X | Xs], [X | Ys]) :- !, decompress_decode_modified(Xs, Ys).
+
+% P13 (**) Run-length encoding of a list (direct solution).
+
+
+% P14 (*) Duplicate the elements of a list.
+dupli([], []) :- !.
+dupli([X | Xs], [X, X | Ys]) :- dupli(Xs, Ys).
