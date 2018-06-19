@@ -114,3 +114,6 @@ rnd_select(Xs, N, [R | Rs]) :- count(Xs, L), random(0, L, I), remove_at(R, Xs, I
 
 % P24 (*) Lotto: Draw N different random numbers from the set 1..M.
 lotto(N, M, Rs) :- range(1, M, Xs), rnd_select(Xs, N, Rs), !.
+
+% P25 (*) Generate a random permutation of the elements of a list.
+rnd_permu(Xs, Ys) :- count(Xs, L), rnd_select(Xs, L, Ys), !.
