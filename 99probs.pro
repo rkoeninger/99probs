@@ -88,3 +88,8 @@ split(Xs, 0, [], Xs).
 
 % P18 (**) Extract a slice from a list.
 slice(Xs, I, J, Ys) :- split(Xs, I, _, Zs), split(Zs, K, Ys, _), J is I + K.
+
+% P19 (**) Rotate a list N places to the left.
+rotate(Xs, 0, Xs) :- !.
+rotate(Xs, N, Ys) :- N > 0, !, split(Xs, N, XLs, XRs), cn(XRs, XLs, Ys).
+rotate(Xs, N, Ys) :- !, count(Xs, L), M is L + N, split(Xs, M, XLs, XRs), cn(XRs, XLs, Ys).
