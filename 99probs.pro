@@ -80,7 +80,7 @@ dropn([X | Xs], N, M, [X | Ys]) :- !, L is M - 1, dropn(Xs, N, L, Ys).
 drop(Xs, N, Ys) :- dropn(Xs, N, N, Ys).
 
 % P17 (*) Split a list into two parts; the length of the first part is given.
-split([X | Xs], N, [X | Ys], Zs) :- splith(Xs, M, Ys, Zs), N is M + 1.
+split([X | Xs], N, [X | Ys], Zs) :- split(Xs, M, Ys, Zs), N is M + 1.
 split(Xs, 0, [], Xs).
 
 % This is cleaner, but disallowed:
