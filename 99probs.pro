@@ -84,7 +84,7 @@ split([X | Xs], N, [X | Ys], Zs) :- split(Xs, M, Ys, Zs), N is M + 1.
 split(Xs, 0, [], Xs).
 
 % This is cleaner, but disallowed:
-%split(Xs, N, Ys, Zs) :- cn(Ys, Zs, Xs), count(Ys, N).
+% split(Xs, N, Ys, Zs) :- cn(Ys, Zs, Xs), count(Ys, N).
 
 % P18 (**) Extract a slice from a list.
 slice(Xs, I, J, Ys) :- split(Xs, I, _, Zs), split(Zs, K, Ys, _), J is I + K.
@@ -97,7 +97,8 @@ rotate(Xs, N, Ys) :- !, count(Xs, L), M is L + N, split(Xs, M, XLs, XRs), cn(XRs
 % P20 (*) Remove the K'th element from a list.
 remove_at(X, Xs, N, Ys) :- count(Xs, L), M is N + 1, at(N, Xs, X), slice(Xs, 0, N, XLs), slice(Xs, M, L, XRs), cn(XLs, XRs, Ys).
 
-
+% P21 (*) Insert an element at a given position into a list.
+insert_at(X, Xs, N, Ys) :- split(Xs, M, XLs, XRs), N is M + 1, cn(XLs, [X], YLs), cn(YLs, XRs, Ys).
 
 % P22 (*) Create a list containing all integers within a given range.
 range(N, N, [N]) :- !.
