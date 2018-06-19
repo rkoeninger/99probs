@@ -107,3 +107,7 @@ insert_at(X, Xs, N, Ys) :- split(Xs, M, XLs, XRs), N is M + 1, cn(XLs, [X], YLs)
 % P22 (*) Create a list containing all integers within a given range.
 range(N, N, [N]) :- !.
 range(N, K, [N | Ns]) :- M is N + 1, range(M, K, Ns).
+
+% P23 (**) Extract a given number of randomly selected elements from a list.
+rnd_select(_, 0, []).
+rnd_select(Xs, N, [R | Rs]) :- count(Xs, L), random(0, L, I), remove_at(R, Xs, I, Ys), rnd_select(Ys, M, Rs), N is M + 1.
