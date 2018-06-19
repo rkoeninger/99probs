@@ -14,11 +14,11 @@ at(N, [_ | Xs], Y) :- M is N - 1, at(M, Xs, Y).
 count([], 0) :- !.
 count([_ | Xs], N) :- count(Xs, M), N is M + 1.
 
+% P05 (*) Reverse a list.
 cn(Xs, [], Xs).
 cn([], Xs, Xs).
 cn([X | Xs], Ys, [X | Zs]) :- cn(Xs, Ys, Zs).
 
-% P05 (*) Reverse a list.
 rev([], []).
 rev([X | Xs], Zs) :- rev(Xs, Ys), cn(Ys, [X], Zs).
 
@@ -49,3 +49,10 @@ encode([[N, X], Y | Ys], [[N, X] | Zs]) :- X \= Y, !, encode([[1, Y] | Ys], Zs).
 encode([X | Ys], [X | Zs]) :- is_list(X), !, encode(Ys, Zs).
 encode([X | Ys], Zs) :- !, encode([[1, X] | Ys], Zs).
 encode([], []).
+
+% P11 (*) Modified run-length encoding.
+remove_singles([], []) :- !.
+remove_singles([[1, X] | Xs], [X | Ys]) :- !, remove_singles(Xs, Ys).
+remove_singles([X | Xs], [X | Ys]) :- !, remove_singles(Xs, Ys).
+
+encode_modified(Xs, Zs) :- encode(Xs, Ys), remove_singles(Ys, Zs).
