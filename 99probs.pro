@@ -56,3 +56,8 @@ remove_singles([[1, X] | Xs], [X | Ys]) :- !, remove_singles(Xs, Ys).
 remove_singles([X | Xs], [X | Ys]) :- !, remove_singles(Xs, Ys).
 
 encode_modified(Xs, Zs) :- encode(Xs, Ys), remove_singles(Ys, Zs).
+
+% P12 (**) Decode a run-length encoded list.
+decompress_decode_modified([], []) :- !.
+decompress_decode_modified([[_, X] | Xs], [X | Ys]) :- !, decompress_decode_modified(Xs, Ys).
+decompress_decode_modified([X | Xs], [X | Ys]) :- !, decompress_decode_modified(Xs, Ys).
