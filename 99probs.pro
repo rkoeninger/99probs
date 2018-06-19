@@ -84,4 +84,7 @@ split([X | Xs], N, [X | Ys], Zs) :- split(Xs, M, Ys, Zs), N is M + 1.
 split(Xs, 0, [], Xs).
 
 % This is cleaner, but disallowed:
-% split(Xs, N, Ys, Zs) :- cn(Ys, Zs, Xs), count(Ys, N).
+%split(Xs, N, Ys, Zs) :- cn(Ys, Zs, Xs), count(Ys, N).
+
+% P18 (**) Extract a slice from a list.
+slice(Xs, I, J, Ys) :- split(Xs, I, _, Zs), split(Zs, K, Ys, _), J is I + K.
