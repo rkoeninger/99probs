@@ -68,3 +68,13 @@ decompress_decode_modified([X | Xs], [X | Ys]) :- !, decompress_decode_modified(
 % P14 (*) Duplicate the elements of a list.
 dupli([], []) :- !.
 dupli([X | Xs], [X, X | Ys]) :- dupli(Xs, Ys).
+
+% P15 (**) Duplicate the elements of a list a given number of times.
+
+
+% P16 (**) Drop every N'th element from a list.
+dropn([], _, _, []) :- !.
+dropn([_ | Xs], N, 1, Ys) :- !, dropn(Xs, N, N, Ys).
+dropn([X | Xs], N, M, [X | Ys]) :- !, L is M - 1, dropn(Xs, N, L, Ys).
+
+drop(Xs, N, Ys) :- dropn(Xs, N, N, Ys).
