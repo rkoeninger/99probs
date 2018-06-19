@@ -70,7 +70,11 @@ dupli([], []) :- !.
 dupli([X | Xs], [X, X | Ys]) :- dupli(Xs, Ys).
 
 % P15 (**) Duplicate the elements of a list a given number of times.
+repeat(0, _, []).
+repeat(N, X, [X | Xs]) :- repeat(M, X, Xs), N is M + 1.
 
+dupln([], _, []) :- !.
+dupln([X | Xs], N, Ys) :- dupln(Xs, N, Zs), repeat(N, X, Ws), cn(Ws, Zs, Ys), !.
 
 % P16 (**) Drop every N'th element from a list.
 dropn([], _, _, []) :- !.
