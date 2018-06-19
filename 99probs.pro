@@ -111,3 +111,6 @@ range(N, K, [N | Ns]) :- M is N + 1, range(M, K, Ns).
 % P23 (**) Extract a given number of randomly selected elements from a list.
 rnd_select(_, 0, []).
 rnd_select(Xs, N, [R | Rs]) :- count(Xs, L), random(0, L, I), remove_at(R, Xs, I, Ys), rnd_select(Ys, M, Rs), N is M + 1.
+
+% P24 (*) Lotto: Draw N different random numbers from the set 1..M.
+lotto(N, M, Rs) :- range(1, M, Xs), rnd_select(Xs, N, Rs), !.
