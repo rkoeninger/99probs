@@ -23,7 +23,7 @@ rev([], []).
 rev([X | Xs], Zs) :- rev(Xs, Ys), cn(Ys, [X], Zs).
 
 % P06 (*) Find out whether a list is a palindrome.
-palindrome(Xs) :- rev(Xs, Ys), Xs = Ys.
+palindrome(Xs) :- rev(Xs, Xs).
 
 % P07 (**) Flatten a nested list structure.
 flat([], []).
