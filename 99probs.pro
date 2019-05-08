@@ -99,7 +99,7 @@ drop(Xs, N, Ys) :- dropn(Xs, N, N, Ys).
 split([X | Xs], N, [X | Ys], Zs) :- split(Xs, M, Ys, Zs), N is M + 1.
 split(Xs, 0, [], Xs).
 
-% This is cleaner, but disallowed:
+% This is cleaner, but disallowed by the prompt:
 % split(Xs, N, Ys, Zs) :- cn(Ys, Zs, Xs), count(Ys, N).
 
 % P18 (**) Extract a slice from a list.
@@ -129,3 +129,15 @@ lotto(N, M, Rs) :- range(1, M, Xs), rnd_select(Xs, N, Rs), !.
 
 % P25 (*) Generate a random permutation of the elements of a list.
 rnd_permu(Xs, Ys) :- count(Xs, L), rnd_select(Xs, L, Ys), !.
+
+% P26 (**) Generate the combinations of K distinct objects chosen from the N elements of a list.
+cat(Xs, [], Xs) :- !.
+cat([], Xs, Xs).
+cat([X | Xs], Ys, [X | Zs]) :- cat(Xs, Ys, Zs).
+
+in(Prefix, X, Suffix, Whole) :- cat(Prefix, [X | Suffix], Whole).
+
+in(X, [Prefix | Suffix], Whole) :- in(Prefix, X, Suffix, Whole).
+
+combination(0, _,  []).
+combination(K, Xs, [X | Ys]) :- J is K - 1, in(X, Others, Xs), combination(J, Others, Ys).
