@@ -53,20 +53,32 @@ encode([], []).
 % P11 (*) Modified run-length encoding.
 remove_singles([], []) :- !.
 remove_singles([[1, X] | Xs], [X | Ys]) :- !, remove_singles(Xs, Ys).
-remove_singles([X | Xs], [X | Ys]) :- !, remove_singles(Xs, Ys).
+remove_singles([X | Xs], [X | Ys])      :- !, remove_singles(Xs, Ys).
 
 encode_modified(Xs, Zs) :- encode(Xs, Ys), remove_singles(Ys, Zs).
 
 % P12 (**) Decode a run-length encoded list.
-decompress_decode_modified([], []) :- !.
-decompress_decode_modified([[_, X] | Xs], [X | Ys]) :- !, decompress_decode_modified(Xs, Ys).
-decompress_decode_modified([X | Xs], [X | Ys]) :- !, decompress_decode_modified(Xs, Ys).
+decompress([], []).
+decompress([[1, X] | Xs], [X | Ys]) :- decompress(Xs, Ys).
+decompress([[N, X] | Xs], [X | Ys]) :- N1 is N - 1, decompress([[N1, X] | Xs], Ys).
+decompress([X | Xs], [X | Ys])      :- decompress(Xs, Ys).
 
 % P13 (**) Run-length encoding of a list (direct solution).
+count_head(_, [], 0).
+count_head(X, [X | Xs], N) :- count_head(X, Xs, M), N is M + 1, !.
+count_head(_, _, 0).
 
+count_head([X | Xs], N) :- count_head(X, [X | Xs], N).
+
+skip(N, X, X) :- N =< 0, !.
+skip(N, [_ | Xs], Ys) :- M is N - 1, skip(M, Xs, Ys).
+
+encode_direct([], []).
+encode_direct([X | Xs], [X      | Ys]) :- count_head([X | Xs], 1), encode_direct(Xs, Ys), !.
+encode_direct([X | Xs], [[N, X] | Ys]) :- count_head([X | Xs], N), skip(N, [X | Xs], Zs), encode_direct(Zs, Ys).
 
 % P14 (*) Duplicate the elements of a list.
-dupli([], []) :- !.
+dupli([], []).
 dupli([X | Xs], [X, X | Ys]) :- dupli(Xs, Ys).
 
 % P15 (**) Duplicate the elements of a list a given number of times.
