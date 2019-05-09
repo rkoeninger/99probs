@@ -139,5 +139,13 @@ in(Prefix, X, Suffix, Whole) :- cat(Prefix, [X | Suffix], Whole).
 
 in(X, [Prefix | Suffix], Whole) :- in(Prefix, X, Suffix, Whole).
 
-combination(0, _,  []).
-combination(K, Xs, [X | Ys]) :- J is K - 1, in(X, Others, Xs), combination(J, Others, Ys).
+combination(0, Xs, [], Xs).
+combination(K, Xs, [X | Ys], R) :- J is K - 1, in(X, Others, Xs), combination(J, Others, Ys, R).
+
+combination(K, Xs, Ys) :- combination(K, Xs, Ys, _).
+
+% P27 (**) Group the elements of a set into disjoint subsets.
+group3(Xs, G1, G2, G3) :-
+  combination(2, Xs, G1, R1),
+  combination(3, R1, G2, R2),
+  combination(4, R2, G3).
